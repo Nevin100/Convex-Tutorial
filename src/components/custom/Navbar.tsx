@@ -6,7 +6,9 @@ const Navbar = () => {
       <div className="flex items-center justify-between w-full">
         <div className="flex items-center gap-x-4">
           <Link href={"/"}>
-            <h1 className="font-semibold text-xl">Todo Application</h1>
+            <h1 className="font-semibold text-xl">
+              Convex Tutorial Application
+            </h1>
           </Link>
         </div>
       </div>
