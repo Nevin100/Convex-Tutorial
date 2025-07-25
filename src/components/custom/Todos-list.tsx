@@ -1,3 +1,5 @@
+"use client";
+
 import { useQuery } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 
@@ -15,10 +17,10 @@ const TodoList = () => {
   if (todos.length == 0) {
     return (
       <div className="flex flex-col items-center justify-center h-96 gap-4">
-        <div className="text-xl font-semibold text-muted-foreground">
+        <div className="text-3xl font-semibold text-muted-foreground">
           No tasks Yet{" "}
         </div>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xl text-muted-foreground">
           Add some tasks to get started
         </p>
       </div>
@@ -27,7 +29,14 @@ const TodoList = () => {
 
   return (
     <div className="space-y-3">
-      {todos?.map((todo) => <p key={todo._id}>{todo?.title}</p>)}
+      <h1 className="text-center text-4xl font-semibold py-4">All Todos :</h1>
+      {todos?.map((todo) => (
+        <div className="font-semibold text-lg px-2 py-3" key={todo._id}>
+          <p className="bg-foreground rounded-lg p-4 text-white text-lg">
+            Todo Title : {todo?.title}
+          </p>
+        </div>
+      ))}
     </div>
   );
 };

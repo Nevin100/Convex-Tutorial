@@ -1,5 +1,6 @@
-// Import the query function helper from Convex's server environment
-import { query } from "./_generated/server";
+// Import the query & mutation function helper from Convex's server environment
+import { v } from "convex/values";
+import { mutation, query } from "./_generated/server";
 
 // Define a Convex query to fetch all todos from the 'todos' collection
 export const getAllTodos = query({
@@ -12,3 +13,20 @@ export const getAllTodos = query({
     return todos.reverse();
   }
 });
+
+// Define a Convex Mutation to Create todo into the 'todos' collection
+export const createTodo = mutation({
+  // Use the arguments (args) to send the data to the database.
+  args: {
+    title: v.string(),
+    completed: v.boolean(),
+  },
+    // The handler function runs when this mutation is called from the frontend
+  handler: async (ctx, args) => {
+    // Use the context (ctx) to access the database and insert the document into the 'todos' collection/table  by passing the args.
+    return ctx.db.insert('todos', {
+      title: args.title,
+      completed: false
+    })
+  }
+})
