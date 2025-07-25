@@ -2,7 +2,6 @@
 import { v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
-
 // -------------------- GET ALL TODOS --------------------
 /**
  * Query to fetch all todos from the 'todos' collection.
@@ -18,6 +17,24 @@ export const getAllTodos = query({
   }
 });
 
+// -------------------- GET SINGLE TODO BY ID --------------------
+/**
+ * Query to fetch a single todo item by its ID from the 'todos' collection.
+ */
+export const getTodo = query({
+  // Define the argument to receive the todo ID
+  args: {
+    id: v.id("todos"),  // ID of the todo to fetch
+  },
+  // Handler to fetch the specific todo document
+  handler: async (ctx, args) => {
+    // Use ctx.db.get() to fetch the document by ID
+    const todo = await ctx.db.get(args.id);
+
+    // Return the found todo (can be null if not found)
+    return todo;
+  }
+});
 
 // -------------------- CREATE TODO --------------------
 /**
@@ -77,3 +94,4 @@ export const deleteTodo = mutation({
     return ctx.db.delete(args.id);
   }
 });
+

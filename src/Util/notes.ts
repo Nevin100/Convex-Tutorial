@@ -19,5 +19,5 @@
 // 3.) Wrap the Navbar and children in layout with the Wrapper of Convex Provider created in step 2 mentioned above.
 
 //Creating the apis :
-// 1.) todos.ts file created with the getAllTodos function using query.
-// 2.) integrate it in client side using useQuery in todo-list.tsx
+// 1.) todos.ts file created with the getAllTodos, updateTodo, DeleteTodo, createTodo function using query & mutation.
+// 2.) integrate it in client side using useQuery and use Mutations in todo-list.tsx
