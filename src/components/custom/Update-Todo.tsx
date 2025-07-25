@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,23 +20,36 @@ import { useMutation } from "convex/react";
 
 type TodoFormData = z.infer<typeof createTodoSchema>;
 
-export default function CreateTodoForm() {
-  const createTodo = useMutation(api.todos.createTodo);
+// Props expected from parent
+type UpdateTodoProps = {
+  todo: {
+    id: string;
+    title: string;
+    completed: boolean;
+  };
+};
+
+export default function UpdateTodo({ todo }: UpdateTodoProps) {
+  const updateTodo = useMutation(api.todos.updateTodo);
 
   const form = useForm<TodoFormData>({
     resolver: zodResolver(createTodoSchema),
     defaultValues: {
-      title: "",
-      completed: false,
+      title: todo.title,
+      completed: todo.completed,
     },
   });
 
-  const handleCreateTodo = async (data: TodoFormData) => {
+  const handleUpdate = async (data: TodoFormData) => {
     try {
-      await createTodo({ title: data.title, completed: false });
-      form.reset();
+      await updateTodo({
+        id: todo.id as any,
+        title: data.title,
+        completed: data.completed,
+      });
+      console.log("Todo updated successfully!");
     } catch (error) {
-      console.log(error);
+      console.error("Update failed:", error);
     }
   };
 
@@ -43,32 +57,30 @@ export default function CreateTodoForm() {
     <Form {...form}>
       <form
         className="w-auto space-y-4"
-        onSubmit={form.handleSubmit(handleCreateTodo)}
+        onSubmit={form.handleSubmit(handleUpdate)}
       >
         <FormField
           control={form.control}
           name="title"
           render={({ field }) => (
             <FormItem>
-              <h1 className="font-bold text-center text-4xl mb-2">
-                Create Todo
-              </h1>
               <FormLabel className="font-bold text-2xl mb-2">Title :</FormLabel>
               <FormControl>
                 <Input
                   {...field}
-                  ref={field.ref}
                   type="text"
-                  placeholder="What are you planning to do ?"
+                  placeholder="Edit your task title"
                   disabled={form.formState.isSubmitting}
-                  className=""
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          Update Todo
+        </Button>
       </form>
     </Form>
   );
