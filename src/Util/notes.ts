@@ -25,5 +25,10 @@
 // Authentication :
 // 1.) Install : npm install @convex-dev/auth @auth/core@0.37.0
 // 2.) Run : npx @convex-dev/auth
-// 3.)
-// 4.)
+// 3.) Fill out the options acordingly and the setup is successfully finished..
+// 4.) Now, insert authtables in schema file just above todos as ...authtables
+// 5.) Now, Wrap your app in ConvexAuthNextjsServerProvider from @convex-dev/auth/nextjs/server in layout.jsx:
+// 6.) After that, In your client provider file, replace ConvexProvider from convex/react with ConvexAuthNextjsProvider from @convex-dev/auth/nextjs:
+// 7.) Setup middleware.ts as written
+// 8.) Setup GitHub OAuth as you know, and also in callback url ('.../api/auth/callback/github') paste the line from HTTP Actions section from convex dashboards/settings/deploy.
+// 9.) Paste the AUTH_GITHUB_ID and AUTH_GITHUB_SECRET in the env of convex dashboard

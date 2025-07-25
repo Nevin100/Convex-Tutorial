@@ -1,16 +1,20 @@
-'use client';
+"use client";
 
-// Import ConvexProvider and ConvexReactClient to enable React integration with Convex backend
-import { ConvexProvider, ConvexReactClient } from "convex/react";
+// Import the Convex React client and Next.js Auth provider
+import { ConvexReactClient } from "convex/react";
+import { ConvexAuthNextjsProvider } from "@convex-dev/auth/nextjs";
 
-// Import ReactNode type to type the children prop
+// Import type for the children prop
 import { ReactNode } from "react";
 
-// Create a new instance of ConvexReactClient using the environment variable for the Convex backend URL
+// Initialize Convex client using the environment variable
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL!);
 
-// Create a wrapper component to provide the Convex client to the entire React component tree
+// Provider component to supply Convex client and auth context to the app
 export function ConvexClientProvider({ children }: { children: ReactNode }) {
-  // Wrap children components inside ConvexProvider to enable access to Convex backend features
-  return <ConvexProvider client={convex}>{children}</ConvexProvider>;
+  return (
+    <ConvexAuthNextjsProvider client={convex}>
+      {children}
+    </ConvexAuthNextjsProvider>
+  );
 }
